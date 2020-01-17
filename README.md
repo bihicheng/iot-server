@@ -12,7 +12,7 @@ iot管理平台，监控，通知，管理
 * 数据采用mysql, mysql当前主从复制模式提供高可用，1主2从，主要是因为mysql成熟，各种运维工具和优化措施
 * golang mysql数据库驱动采用go-sql-driver，（本打算不用orm,但是看了一下gorm还不错，比较简单比较容易修改，在开发便捷和性能上是个折中方案）写原生sql（注意sql注入安全风险），不使用orm，因为不方便优化sql查询等
 * 消息队列先使用redis， 以后可能会用kafaka，主要是考虑到可能同时有大量100万的数据上报
-* 系统配置模块 仔细看了一下https://github.com/jinzhu/configor，满足需要就不重复造轮子了。
+* 系统配置模块 仔细看了一下![configor](https://github.com/jinzhu/configor)，满足需要就不重复造轮子了。
 * 日志模块
 * 部署方式
 * 开发方式
