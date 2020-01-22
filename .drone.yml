@@ -6,7 +6,7 @@ steps:
   image: golang:alpine
   pull: if-not-exists # always never
   commands:
-    - CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o iotserver.
+    - CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o iotserver .
     - ./iotserver
 
 trigger:
