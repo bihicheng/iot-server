@@ -1,0 +1,61 @@
+clone_depth: 5
+
+environment:
+    GOPATH: c:\go
+    access_token:
+        secure: gatZqOPUSWTv5qN/dyOqgB56fwufuR7gjhwF24HwrGrmIiqueO+JnjKEVuaxX/9m
+    docker_username:
+        secure: sUz81PIMMUZfM47mumjhmg==
+    docker_password:
+        secure: w3QAkd8XC8RSxXT2nOL/hg==
+
+branches:
+  only:
+    - master
+
+install:
+  - ps: |
+      docker version
+      go version
+
+build_script:
+  - ps: |
+      if ( $env:APPVEYOR_REPO_TAG -eq 'false' ) {
+        $version = $env:APPVEYOR_REPO_COMMIT
+        $buildDate = $env:APPVEYOR_REPO_COMMIT_TIMESTAMP
+      } else {
+        $version = $env:APPVEYOR_REPO_TAG_NAME
+        $buildDate = $env:APPVEYOR_REPO_COMMIT_TIMESTAMP
+      }
+      go build -a -o release/iotserver.exe .
+
+      docker pull microsoft/nanoserver:10.0.14393.1884
+      docker build -f docker/Dockerfile.windows.amd64 -t bihicheng/iotserver:windows-amd64 .
+    
+test_script:
+  - ps: |
+      docker run --rm bihicheng/iotserver:windows-amd64 --version
+
+deploy_script:
+  - ps: |
+      $ErrorActionPreference = 'Stop';
+      if ( $env:APPVEYOR_PULL_REQUEST_NUMBER ) {
+        Write-Host Nothing to deploy.
+      } else {
+        echo $env:DOCKER_PASSWORD | docker login --username $env:DOCKER_USERNAME --password-stdin
+        if ( $env:APPVEYOR_REPO_TAG -eq 'true' ) {
+          $major,$minor,$patch = $env:APPVEYOR_REPO_TAG_NAME.split('.')
+          docker push bihicheng/iotserver:windows-amd64
+          docker tag bihicheng/iotserver:windows-amd64 bihicheng/iotserver:$major.$minor.$patch-windows-amd64
+          docker push bihicheng/iotserver:$major.$minor.$patch-windows-amd64
+          docker tag bihicheng/iotserver:windows-amd64 bihicheng/iotserver:$major.$minor-windows-amd64
+          docker push bihicheng/iotserver:$major.$minor-windows-amd64
+          docker tag bihicheng/iotserver:windows-amd64 bihicheng/iotserver:$major-windows-amd64
+          docker push bihicheng/iotserver:$major-windows-amd64
+        } else {
+          if ( $env:APPVEYOR_REPO_BRANCH -eq 'master' ) {
+            docker push bihicheng/iotserver:windows-amd64
+          }
+        }
+      }
+
