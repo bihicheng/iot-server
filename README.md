@@ -1,4 +1,6 @@
 [![Build Status](https://cloud.drone.io/api/badges/bihicheng/iot-server/status.svg)](https://cloud.drone.io/bihicheng/iot-server)
+[![Build status](https://ci.appveyor.com/api/projects/status/8a623ky7tfdypfuc?svg=true)](https://ci.appveyor.com/project/bihicheng/iot-server)
+
 
 # iot-server
 iot管理平台，监控，通知，管理
