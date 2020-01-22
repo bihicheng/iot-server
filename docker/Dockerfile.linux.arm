@@ -1,0 +1,10 @@
+FROM plugins/base:linux-arm
+
+LABEL maintainer="haicheng bi <bihicheng@gmail.com>" \
+  org.label-schema.name="iotserver" \
+  org.label-schema.vendor="haicheng bi" \
+  org.label-schema.schema-version="1.0"
+
+COPY release/linux/arm/iotserver /bin/
+
+ENTRYPOINT ["/bin/iotserver"]

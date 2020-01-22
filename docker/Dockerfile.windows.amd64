@@ -1,0 +1,10 @@
+FROM microsoft/nanoserver:10.0.14393.1884
+
+LABEL maintainer="haicheng bi <bihicheng@gmail.com>" \
+  org.label-schema.name="iotserver" \
+  org.label-schema.vendor="haicheng bi" \
+  org.label-schema.schema-version="1.0"
+
+COPY release/iotserver.exe C:/bin/iotserver.exe
+
+ENTRYPOINT [ "C:\\bin\\iotserver.exe" ]
