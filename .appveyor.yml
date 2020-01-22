@@ -32,9 +32,9 @@ build_script:
       docker pull microsoft/nanoserver:10.0.14393.1884
       docker build -f docker/Dockerfile.windows.amd64 -t bihicheng/iotserver:windows-amd64 .
     
-test_script:
-  - ps: |
-      docker run --rm bihicheng/iotserver:windows-amd64
+      #test_script:
+      #- ps: |
+      #docker run --rm bihicheng/iotserver:windows-amd64
 
 deploy_script:
   - ps: |
