@@ -34,7 +34,7 @@ build_script:
     
 test_script:
   - ps: |
-      docker run --rm bihicheng/iotserver:windows-amd64 --version
+      docker run --rm bihicheng/iotserver:windows-amd64
 
 deploy_script:
   - ps: |
